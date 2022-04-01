@@ -6,6 +6,7 @@ package br.edu.ifsp.pep.controller;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -14,5 +15,20 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class UploadController {
+    
+    private UploadedFile file;
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public UploadController() {
+    }
+    
+    
     
 }
