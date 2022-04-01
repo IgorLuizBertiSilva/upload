@@ -13,12 +13,29 @@
         <div class="card">
             <h5>Single</h5>
             <h:form enctype="multipart/form-data">
-                <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
+                <p:fileUpload value="#{uploadController.file}" 
+                              mode="simple" skinSimple="true"/>
+                
 
                 <p:commandButton value="Submit" ajax="false" 
                                  action="#{uploadController.upload}" 
-                                 styleClass="p-mt-3 ui-button-outlined p-d-block"/>
+                                 styleClass="p-mt-3 ui-button-outlined p-d-block"
+                                 />
             </h:form>
+
+            <div class="card">
+                <h5>Multiple</h5>
+                <h:form enctype="multipart/form-data">
+                    <p:fileUpload value="#{uploadController.files}" 
+                                  mode="simple" skinSimple="true" multiple="true"/>
+                    <p:commandButton value="Submit" ajax="false" 
+                                     action="#{uploadController.uploadMultiple}" 
+                                     styleClass="p-mt-3 ui-button-outlined p-d-block"/>
+                </h:form>
+            </div>
+
+
+
         </div>
 
     </h:body>
