@@ -54,8 +54,11 @@
 
         <div class="card">
             <h5>Galeria</h5>
-            <p:galleria value="#{uploadController.fotos}" var="foto" numVisible="5" style="max-width: 640px">
-                <p:graphicImage value="#{foto}"  style="width: 100%" />
+            <p:galleria value="#{uploadController.fotos}" var="foto" numVisible="5" 
+                        showThumbnails="false" showIndicators="true" 
+                         showItemNavigators="true" circular="true"
+                        style="max-width: 640px">
+                <p:graphicImage value="#{foto}"  alt="#{foto}" style="width: 100%" stream="false" />
                 
             </p:galleria>
         </div>
