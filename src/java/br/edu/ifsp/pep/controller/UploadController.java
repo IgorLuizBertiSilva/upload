@@ -40,7 +40,7 @@ public class UploadController {
 
     private UploadedFiles files;
 
-    private List<DefaultStreamedContent> fotos;
+    private List<StreamedContent> fotos;
 
     public UploadedFile getFile() {
         return file;
@@ -115,8 +115,31 @@ public class UploadController {
         
         
     }
+    
+    public StreamedContent toStream(String diretorio) {
+        try {
+            
+            return DefaultStreamedContent.builder()
+                    .contentType("image/png")
+                    .stream(() -> {
+                        try {
+                            File file = new File(diretorio);
+                            return new FileInputStream(file);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    })
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        
+    } 
 
-    public List<DefaultStreamedContent> getFotos() {
+    public List<StreamedContent> getFotos() {
 
         File pasta = new File(DIRETORIO + "originais/");
 
@@ -125,23 +148,8 @@ public class UploadController {
         for (File arquivo : arquivos) {
             
             
-            try {
-                fotos.add(DefaultStreamedContent.builder()
-                        .contentType("image/png")
-                        .stream(() -> {
-                            try {
-                                
-                                return new FileInputStream(arquivo);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        })
-                        .build());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
+            
+            fotos.add(toStream(arquivo.getPath()));
 
         }
         
