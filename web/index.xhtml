@@ -49,7 +49,15 @@
             <h5>JFreeChart</h5>
             <p:graphicImage value="#{uploadController.image}" width="200"
                             alt="Uma imagem com titulo"/>
-            
+
+        </div>
+
+        <div class="card">
+            <h5>Galeria</h5>
+            <p:galleria value="#{uploadController.fotos}" var="foto" numVisible="5" style="max-width: 640px">
+                <p:graphicImage value="#{foto}"  style="width: 100%" />
+                
+            </p:galleria>
         </div>
 
     </h:body>

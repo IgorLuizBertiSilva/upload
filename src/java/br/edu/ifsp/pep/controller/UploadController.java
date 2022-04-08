@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,15 +30,17 @@ import org.primefaces.model.file.UploadedFiles;
  * @author aluno
  */
 @Named
-//@RequestScoped
-@ViewScoped
-public class UploadController implements Serializable{
+@RequestScoped
+
+public class UploadController {
 
     private final String DIRETORIO = "/home/aluno/uploads/";
 
     private UploadedFile file;
 
     private UploadedFiles files;
+
+    private List<DefaultStreamedContent> fotos;
 
     public UploadedFile getFile() {
         return file;
@@ -88,33 +92,70 @@ public class UploadController implements Serializable{
 
         }
     }
-    
+
     public StreamedContent getImage() {
         try {
+            
             return DefaultStreamedContent.builder()
                     .contentType("image/png")
                     .stream(() -> {
                         try {
                             File file = new File(DIRETORIO + "Com Titulo.png");
                             return new FileInputStream(file);
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             return null;
                         }
                     })
                     .build();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+        
+        
     }
 
-    public UploadController() {
+    public List<DefaultStreamedContent> getFotos() {
 
+        File pasta = new File(DIRETORIO + "originais/");
+
+        File[] arquivos = pasta.listFiles();
+
+        for (File arquivo : arquivos) {
+            
+            
+            try {
+                fotos.add(DefaultStreamedContent.builder()
+                        .contentType("image/png")
+                        .stream(() -> {
+                            try {
+                                
+                                return new FileInputStream(arquivo);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        })
+                        .build());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        }
         
+        for (StreamedContent foto : fotos) {
+            System.out.println(foto.getName());
+        }
 
+        return fotos;
+    }
+    
+ 
+
+    public UploadController() {
+        fotos = new ArrayList<>();
     }
 
 }
