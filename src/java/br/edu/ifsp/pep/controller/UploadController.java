@@ -5,7 +5,10 @@
 package br.edu.ifsp.pep.controller;
 
 import br.edu.ifsp.pep.util.Util;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +16,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 
@@ -22,8 +28,9 @@ import org.primefaces.model.file.UploadedFiles;
  * @author aluno
  */
 @Named
-@RequestScoped
-public class UploadController {
+//@RequestScoped
+@ViewScoped
+public class UploadController implements Serializable{
 
     private final String DIRETORIO = "/home/aluno/uploads/";
 
@@ -79,6 +86,28 @@ public class UploadController {
                 criarArquivoEmDisco(file1);
             }
 
+        }
+    }
+    
+    public StreamedContent getImage() {
+        try {
+            return DefaultStreamedContent.builder()
+                    .contentType("image/png")
+                    .stream(() -> {
+                        try {
+                            File file = new File(DIRETORIO + "Com Titulo.png");
+                            return new FileInputStream(file);
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    })
+                    .build();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

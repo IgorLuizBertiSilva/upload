@@ -15,7 +15,7 @@
             <h:form enctype="multipart/form-data">
                 <p:fileUpload value="#{uploadController.file}" 
                               mode="simple" skinSimple="true"/>
-                
+
 
                 <p:commandButton value="Submit" ajax="false" 
                                  action="#{uploadController.upload}" 
@@ -36,6 +36,20 @@
 
 
 
+        </div>
+
+        <div class="card">
+            <h5>Static Image</h5>
+            <p:graphicImage name="Com Titulo.png" library="img" width="400" 
+                            alt="Uma imagem com titulo"/>
+        </div>
+
+
+        <div class="card">
+            <h5>JFreeChart</h5>
+            <p:graphicImage value="#{uploadController.image}" width="200"
+                            alt="Uma imagem com titulo"/>
+            
         </div>
 
     </h:body>
